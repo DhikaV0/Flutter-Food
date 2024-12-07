@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/Widgets/CategoriesWidget.dart';
 import 'package:food_app/Widgets/FoodGenreWidget.dart';
-import 'package:food_app/widgets/AppBarWidget.dart';
+import 'package:food_app/widgets/AppBarWidgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Homepage extends StatefulWidget {
@@ -17,7 +17,7 @@ class _HomepageState extends State<Homepage> {
   void _onItemTapped(int index) {
     if (index == 1) {
       Navigator.pushNamed(context, '/CartPage');
-    } else if (index == 2) {
+    } else if (index == 2) { 
       Navigator.pushNamed(context, '/PostAdd');
     } else {
       setState(() {
@@ -31,7 +31,7 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       body: ListView(
         children: [
-          const Appbarwidgets(),
+          const AppBarWidgets(),
           const Categorieswidget(),
           Padding(
             padding: const EdgeInsets.only(top: 20, left: 20),

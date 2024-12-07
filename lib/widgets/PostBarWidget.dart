@@ -11,10 +11,12 @@ class PostBarWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Nama Produk: ${postData?['name'] ?? 'N/A'}'),
-        Text('Harga: ${postData?['price'] ?? 'N/A'}'),
-        Text('Kategori: ${postData?['category'] ?? 'N/A'}'),
-        Text('Image: ${postData?['image'] ?? 'N/A'}'),
+        if (postData != null) ...[
+          Text('Nama Produk: ${postData?['name'] ?? ''}'),
+          Text('Harga: ${postData?['price'] ?? ''}'),
+          Text('Kategori: ${postData?['category'] ?? ''}'),
+        ] else
+          Text('Belum ada data yang ditambahkan'),
       ],
     );
   }
@@ -41,11 +43,25 @@ class _YourWidgetState extends State<YourWidget> {
             onTap: () async {
               final result = await Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AddData()),
+                MaterialPageRoute(
+                  builder: (context) => AddData(
+                    onSubmit: (data) {
+                      // Konversi data ke Map<String, String?>
+                      setState(() {
+                        _postData = data.map(
+                          (key, value) => MapEntry(key, value.toString()),
+                        );
+                      });
+                    },
+                  ),
+                ),
               );
+
               if (result != null) {
                 setState(() {
-                  _postData = result;
+                  _postData = result.map(
+                    (key, value) => MapEntry(key, value.toString()),
+                  );
                 });
               }
             },
@@ -58,7 +74,7 @@ class _YourWidgetState extends State<YourWidget> {
               child: const Text(
                 'Add Data +',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.white, // Memastikan warna teks terlihat
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
